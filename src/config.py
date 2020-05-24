@@ -191,7 +191,6 @@ def get(key):
     """Return the given key from the config"""
     return config[key]
 
-
 def is_scheduled():
     return config["schedule"]
 

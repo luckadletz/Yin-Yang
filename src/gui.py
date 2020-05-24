@@ -348,6 +348,8 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def set_correct_buttons(self):
         theme = config.get_theme()
+
+        # BUG Light the only button to press
         if theme == "dark":
             self.ui.light_push.setEnabled(True)
             self.ui.dark_push.setEnabled(False)

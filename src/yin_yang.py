@@ -1,13 +1,12 @@
 #!/bin/python
 
-
 """
 title: yin_yang
 description: yin_yang provides a easy way to toggle between light and dark
 mode for your kde desktop. It also themes your vscode and
-all other qt application with it.
-author: daehruoydeef
-date: 21.12.2018
+all other qt applications with it.
+author: luckadletz, daehruoydeef
+date: 5/23/2020
 license: MIT
 """
 
@@ -18,10 +17,10 @@ import time
 import pwd
 import datetime
 import subprocess
+
 from src import gui
 from src.plugins import kde, gtkkde, wallpaper, vscode, atom, gtk, firefox, gnome
 from src import config
-
 
 # aliases for path to use later on
 user = pwd.getpwuid(os.getuid())[0]
@@ -30,12 +29,14 @@ path = "/home/"+user+"/.config/"
 terminate = False
 
 
+# TODO Poetic, but these should be one class
 class Yang(threading.Thread):
     def __init__(self, thread_id):
         threading.Thread.__init__(self)
         self.thread_id = thread_id
 
     def run(self):
+        # TODO loop through enabled plugins dynamically
         if config.get("codeEnabled"):
             vscode.switch_to_light()
         if config.get("atomEnabled"):
@@ -52,8 +53,7 @@ class Yang(threading.Thread):
             gnome.switch_to_light()
         if config.get("firefoxEnabled"):
             firefox.switch_to_light()
-        play_sound("./assets/light.wav")
-
+        # play_sound("./assets/light.wav")
 
 class Yin(threading.Thread):
     def __init__(self, thread_id):
@@ -63,32 +63,25 @@ class Yin(threading.Thread):
     def run(self):
         if config.get("codeEnabled"):
             vscode.switch_to_dark()
-
         if config.get("atomEnabled"):
             atom.switch_to_dark()
-
         if config.get("kdeEnabled"):
             kde.switch_to_dark()
-
         if config.get("wallpaperEnabled"):
             wallpaper.switch_to_dark()
-
         # kde support
         if config.get("gtkEnabled") and config.get("desktop") == "kde":
             gtkkde.switch_to_dark()
-
         # gnome and budgie support
         if config.get("gtkEnabled") and config.get("desktop") == "gtk":
             gtk.switch_to_dark()
-
         # gnome-shell
         if config.get("gnomeEnabled"):
             gnome.switch_to_dark()
-        
         # firefox support
         if config.get("firefoxEnabled"):
             firefox.switch_to_dark()
-        play_sound("/assets/dark.wav")
+        # play_sound("/assets/dark.wav")
 
 
 class Daemon(threading.Thread):
@@ -139,32 +132,9 @@ def switch_to_dark():
     config.update("theme", "dark")
     yin.join()
 
-
 def start_daemon():
     daemon = Daemon(3)
     daemon.start()
-
-def resource_path(relative_path):
-    """ Get absolute path to resource, works for dev and for PyInstaller """
-    try:
-        # PyInstaller creates a temp folder and stores path in _MEIPASS
-        base_path = sys._MEIPASS
-    except Exception:
-        base_path = os.path.abspath(".")
-
-    return os.path.join(base_path, relative_path)
-
-
-def play_sound(sound):
-    """ Description - only works with pulseaudio.
-    :type sound: String (Path)
-    :param sound: Sound path to be played audiofile from
-    :rtype: I hope you will hear your Sound ;)
-    """
-
-
-    subprocess.run(["paplay", resource_path(sound)])
-
 
 def should_be_light():
     # desc: return if the Theme should be light
@@ -178,6 +148,7 @@ def should_be_light():
     hour = datetime.datetime.now().time().hour
     minute = datetime.datetime.now().time().minute
 
+    # TODO this is strange?
     if(hour >= l_hour and hour < d_hour):
         return not (hour == l_hour and minute <= l_minute)
     else:

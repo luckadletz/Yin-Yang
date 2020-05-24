@@ -77,7 +77,6 @@ config["longitude"] = ""
 config["schedule"] = False
 config["switchToDark"] = "20:00"
 config["switchToLight"] = "07:00"
-config["running"] = False
 config["theme"] = ""
 config["codeLightTheme"] = "Default Light+"
 config["codeDarkTheme"] = "Default Dark+"

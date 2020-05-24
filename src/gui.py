@@ -347,18 +347,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.light_time.setTime(light_time)
 
     def set_correct_buttons(self):
-        theme = config.get_theme()
-
-        # BUG Light the only button to press
-        if theme == "dark":
-            self.ui.light_push.setEnabled(True)
-            self.ui.dark_push.setEnabled(False)
-        if theme == "light":
-            self.ui.light_push.setEnabled(False)
-            self.ui.dark_push.setEnabled(True)
-        if theme == "":
-            self.ui.light_push.setEnabled(True)
-            self.ui.dark_push.setEnabled(True)
+        self.ui.light_push.setEnabled(True)
+        self.ui.dark_push.setEnabled(True)
 
     def time_changed(self):
         # update config if time has changed
@@ -378,3 +368,6 @@ class MainWindow(QtWidgets.QMainWindow):
         else:
             self.ui.dark_time.setEnabled(False)
             self.ui.light_time.setEnabled(False)
+
+
+

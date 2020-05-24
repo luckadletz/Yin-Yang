@@ -177,6 +177,6 @@ class Ui_MainWindow(object):
         self.wallpaper_button_light.setText(_translate("MainWindow", "light"))
         self.wallpaper_button_dark.setText(_translate("MainWindow", "dark"))
         self.version_label.setText(_translate("MainWindow", "version: 0.1"))
-        self.back_button.setText(_translate("MainWindow", "back"))
+        self.back_button.setText(_translate("MainWindow", "Back"))
 
 

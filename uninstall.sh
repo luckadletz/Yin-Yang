@@ -23,4 +23,3 @@ echo "Removing manifest"
 rm -f /usr/lib/mozilla/native-messaging-hosts/yin_yang.json
 
 echo Yin-Yang uninstalled succesfully
-echo have a nice day ...

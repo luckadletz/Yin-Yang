@@ -85,6 +85,7 @@ class Yin(threading.Thread):
 
 
 class Daemon(threading.Thread):
+    # TODO it's probably better to just add `yin-yang -L` and `yin-yang -D` to chron than run a python thread...
     def __init__(self, thread_id):
         threading.Thread.__init__(self)
         self.thread_id = thread_id
@@ -93,11 +94,9 @@ class Daemon(threading.Thread):
         while True:
 
             if terminate:
-                config.update("running", False)
                 break
 
             if not config.is_scheduled():
-                config.update("running", False)
                 break
 
             editable = config.get_config()
@@ -132,9 +131,23 @@ def switch_to_dark():
     config.update("theme", "dark")
     yin.join()
 
+def toggle_theme():
+    """Switch themes"""
+    theme = config.get_theme()
+    if theme == "dark":
+        switch_to_light()
+    elif theme == "light":
+        switch_to_dark()
+    else:
+        print("No theme has been applied yet. Apply a theme or set a schedule first.")
+
 def start_daemon():
+    if config.get("followSun"):
+        # calculate time if needed
+        config.set_sun_time()
     daemon = Daemon(3)
     daemon.start()
+    # Wait, doesn't this just loop until the process is killed?
 
 def should_be_light():
     # desc: return if the Theme should be light

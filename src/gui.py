@@ -271,11 +271,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.setWindowTitle("Yin-Yang")
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        # center itself
+
         self.center()
-        # connects all buttons to the correct routes
         self.register_handlers()
-        # syncs the UI with the config
         self.sync_with_config()
 
     def center(self):
@@ -317,21 +315,10 @@ class MainWindow(QtWidgets.QMainWindow):
     def toggle_light(self):
         yin_yang.switch_to_light()
         self.sync_with_config()
-        # experimental
-        # self.restart()
 
     def toggle_dark(self):
         yin_yang.switch_to_dark()
         self.sync_with_config()
-        # self.restart()
-
-    # no needed since QT is now used system wise instead of python wise
-    def restart(self):
-        """Restarts the current program.
-        Note: this function does not return. Any cleanup action (like
-        saving data) must be done before calling this function."""
-        python = sys.executable
-        os.execl(python, python, * sys.argv)
 
     def set_correct_time(self):
         new_config = config.get_config()

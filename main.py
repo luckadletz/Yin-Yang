@@ -56,9 +56,9 @@ def main():
             yin_yang.start_daemon()
         else:
             print("looks like you did not specified a time")
-            print("You can use the gui with yin-yang -gui")
+            print("You can use the gui with yin-yang --config")
             print("Or edit the config found in ~/.config/yin_yang/yin_yang.json")
-            print("You need to set schedule to True and edit the time to toggle")
+        return
 
     # No args
     parser.print_help()

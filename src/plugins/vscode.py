@@ -14,14 +14,12 @@ def inplace_change(filename, old_string, new_string):
                 defaults to the default path
     """
 
-    # Safely read the input filename using 'with'
     with open(filename) as f:
         s = f.read()
         if old_string not in s:
             print('"{old_string}" not found in {filename}.'.format(**locals()))
             return
 
-    # Safely write the changed content, if found in the file
     with open(filename, 'w') as f:
         print(
             'Changing "{old_string}" to "{new_string}" in {filename}'
@@ -74,7 +72,6 @@ def switch_to_dark():
         path+"/Code - OSS/User/settings.json",
         path+"/Code/User/settings.json",
         path+"/Code - Insiders/User/settings.json",
-
     ]
 
     for editor in possible_editors:

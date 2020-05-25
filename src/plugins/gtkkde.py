@@ -2,6 +2,27 @@ import pwd
 import os
 import re
 from src import config
+from src import plugin
+
+class Plugin(plugin.Base):
+    @staticmethod
+    def name() -> str:
+        return "KDE/GTK"
+    
+    @classmethod
+    def apply_light(cls, config):
+        super(Plugin, cls).apply_light(config)
+        switch_to_light(config)
+
+    @classmethod
+    def apply_dark(cls, config):
+        super(Plugin, cls).apply_dark(config)
+        switch_to_dark(config)
+
+    @classmethod
+    def is_enabled(cls, config) -> bool:
+        return config.get("gtkEnabled")
+
 
 # aliases for path to use later on
 user = pwd.getpwuid(os.getuid())[0]

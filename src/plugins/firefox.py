@@ -5,11 +5,34 @@ from tempfile import mkstemp
 from shutil import move
 from typing import Dict
 from src import config
+from src import plugin
+
+class Plugin(plugin.Base):
+    # TODO Not hooked up to gui, prob not tested?
+
+    @staticmethod
+    def name() -> str:
+        return "Firefox"
+    
+    @classmethod
+    def apply_light(cls, config):
+        super.apply_light(config)
+        switch_to_light(config)
+
+    @classmethod
+    def apply_dark(cls, config):
+        super.apply_dark(config)
+        switch_to_dark(config)
+
+    @classmethod
+    def is_enabled(cls, config) -> bool:
+        return False
+
+# TODO Move into class
 
 # aliases for path to use later on
 user = pwd.getpwuid(os.getuid())[0]
 path = '/home/' + user + '/.mozilla/firefox/'
-
 
 def get_profiles() -> Dict[str, str]:
     """
@@ -112,10 +135,10 @@ def write_new_settings(theme: str, dark: bool):
     config.update("firefoxActiveTheme", theme)
 
 
-def switch_to_light():
+def switch_to_light(config):
     # TODO: only standard themes supported right now
     write_new_settings(config.get("firefoxLightTheme"), False)
 
 
-def switch_to_dark():
+def switch_to_dark(config):
     write_new_settings(config.get("firefoxDarkTheme"), True)

@@ -2,11 +2,34 @@ import os
 import pwd
 import json
 from src import config
+from src import plugin
 
 # aliases for path to use later on
 user = pwd.getpwuid(os.getuid())[0]
 path = "/home/"+user+"/.config"
 
+
+class Plugin(plugin.Base):
+    @staticmethod
+    def name() -> str:
+        return "Visual Studio Code"
+    
+    @classmethod
+    def apply_light(cls, config):
+        super(Plugin, cls).apply_light(config)
+        switch_to_light(config)
+
+    @classmethod
+    def apply_dark(cls, config):
+        super(Plugin, cls).apply_dark(config)
+        switch_to_dark(config)
+
+    @classmethod
+    def is_enabled(cls, config) -> bool:
+        return config.get("codeEnabled")
+
+
+#TODO refactor into plugin class
 
 def inplace_change(filename, old_string, new_string):
     """@params: config - config to be written into file
@@ -21,9 +44,7 @@ def inplace_change(filename, old_string, new_string):
             return
 
     with open(filename, 'w') as f:
-        print(
-            'Changing "{old_string}" to "{new_string}" in {filename}'
-            .format(**locals()))
+        print(f'Changing "{old_string}" to "{new_string}" in {filename}')
         s = s.replace(old_string, new_string)
         f.write(s)
 
@@ -36,7 +57,7 @@ def write_new_settings(settings, path):
         json.dump(settings, conf, indent=4)
 
 
-def switch_to_light():
+def switch_to_light(config):
     code_theme = config.get("codeLightTheme")
     possible_editors = [
         path+"/VSCodium/User/settings.json",
@@ -65,7 +86,7 @@ def switch_to_light():
                            old_theme, code_theme)
 
 
-def switch_to_dark():
+def switch_to_dark(config):
     code_theme = config.get("codeDarkTheme")
     possible_editors = [
         path+"/VSCodium/User/settings.json",

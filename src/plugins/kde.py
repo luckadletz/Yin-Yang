@@ -1,16 +1,24 @@
 import subprocess
 from src import config
+from src import plugin
 
+class Plugin(plugin.Base):
+    @staticmethod
+    def name() -> str:
+        return "KDE Plasma"
+    
+    @classmethod
+    def apply_light(cls, config):
+        super.apply_light(config)
+        kde_theme = config.get("kdeLightTheme")
+        subprocess.run(["lookandfeeltool", "-a", kde_theme])
 
-def switch_to_light():
-    kde_theme = config.get("kdeLightTheme")
-    # uses a kde api to switch to a light theme
-    print("LIGHT:", kde_theme)
-    subprocess.run(["lookandfeeltool", "-a", kde_theme])
+    @classmethod
+    def apply_dark(cls, config):
+        super.apply_dark(config)
+        kde_theme = config.get("kdeDarkTheme")
+        subprocess.run(["lookandfeeltool", "-a", kde_theme])
 
-
-def switch_to_dark():
-    kde_theme = config.get("kdeDarkTheme")
-    # uses a kde api to switch to a dark theme
-    print("Dark:", kde_theme)
-    subprocess.run(["lookandfeeltool", "-a", kde_theme])
+    @classmethod
+    def is_enabled(cls, config) -> bool:
+        return config.get("kdeEnabled")

@@ -19,7 +19,7 @@ import datetime
 import subprocess
 
 from src import gui
-from src.plugins import kde, gtkkde, wallpaper, vscode, atom, gtk, firefox, gnome
+from src import plugin
 from src import config
 
 # aliases for path to use later on
@@ -28,61 +28,44 @@ path = "/home/"+user+"/.config/"
 
 terminate = False
 
-
-# TODO Poetic, but these should be one class
-class Yang(threading.Thread):
-    def __init__(self, thread_id):
-        threading.Thread.__init__(self)
-        self.thread_id = thread_id
+class YinYang():
+    def __init__(self, config, light):
+        self.config = config
+        self.light = light
 
     def run(self):
-        # TODO loop through enabled plugins dynamically
-        if config.get("codeEnabled"):
-            vscode.switch_to_light()
-        if config.get("atomEnabled"):
-            atom.switch_to_light()
-        if config.get("kdeEnabled"):
-            kde.switch_to_light()
-        if config.get("wallpaperEnabled"):
-            wallpaper.switch_to_light()
-        if config.get("gtkEnabled") and config.get("desktop") == "kde":
-            gtkkde.switch_to_light()
-        if config.get("gtkEnabled") and config.get("desktop") == "gtk":
-            gtk.switch_to_light()
-        if config.get("gnomeEnabled"):
-            gnome.switch_to_light()
-        if config.get("firefoxEnabled"):
-            firefox.switch_to_light()
-        # play_sound("./assets/light.wav")
+        self.config.update("theme", "light")
+        if(self.light):
+            self.apply_all_light()
+        else:
+            self.apply_all_dark()
 
-class Yin(threading.Thread):
-    def __init__(self, thread_id):
-        threading.Thread.__init__(self)
-        self.thread_id = thread_id
+    def apply_all_dark(self):
+        for p in plugin.AllPlugins():
+            if(p.is_enabled(self.config)):
+                p.apply_dark(self.config)
 
-    def run(self):
-        if config.get("codeEnabled"):
-            vscode.switch_to_dark()
-        if config.get("atomEnabled"):
-            atom.switch_to_dark()
-        if config.get("kdeEnabled"):
-            kde.switch_to_dark()
-        if config.get("wallpaperEnabled"):
-            wallpaper.switch_to_dark()
-        # kde support
-        if config.get("gtkEnabled") and config.get("desktop") == "kde":
-            gtkkde.switch_to_dark()
-        # gnome and budgie support
-        if config.get("gtkEnabled") and config.get("desktop") == "gtk":
-            gtk.switch_to_dark()
-        # gnome-shell
-        if config.get("gnomeEnabled"):
-            gnome.switch_to_dark()
-        # firefox support
-        if config.get("firefoxEnabled"):
-            firefox.switch_to_dark()
-        # play_sound("/assets/dark.wav")
+    def apply_all_light(self):
+        for p in plugin.AllPlugins():
+            if(p.is_enabled(self.config)):
+                p.apply_light(self.config)
 
+def switch_to_light():
+    yin = YinYang(config, True)
+    yin.run()
+
+def switch_to_dark():
+    yang = YinYang(config, False)
+    yang.run()
+
+def toggle_theme():
+    theme = config.get_theme()
+    if theme == "dark":
+        switch_to_light()
+    elif theme == "light":
+        switch_to_dark()
+    else:
+        print("No theme has been applied yet. Apply a theme or set a schedule first.")
 
 class Daemon(threading.Thread):
     # TODO it's probably better to just add `yin-yang -L` and `yin-yang -D` to chron than run a python thread...
@@ -92,13 +75,10 @@ class Daemon(threading.Thread):
 
     def run(self):
         while True:
-
             if terminate:
                 break
-
             if not config.is_scheduled():
                 break
-
             editable = config.get_config()
 
             theme = config.get("theme")
@@ -118,36 +98,13 @@ class Daemon(threading.Thread):
 
             time.sleep(30)
 
-
-def switch_to_light():
-    yang = Yang(1)
-    yang.start()
-    config.update("theme", "light")
-    yang.join()
-
-def switch_to_dark():
-    yin = Yin(2)
-    yin.start()
-    config.update("theme", "dark")
-    yin.join()
-
-def toggle_theme():
-    """Switch themes"""
-    theme = config.get_theme()
-    if theme == "dark":
-        switch_to_light()
-    elif theme == "light":
-        switch_to_dark()
-    else:
-        print("No theme has been applied yet. Apply a theme or set a schedule first.")
-
 def start_daemon():
     if config.get("followSun"):
         # calculate time if needed
         config.set_sun_time()
     daemon = Daemon(3)
     daemon.start()
-    # Wait, doesn't this just loop until the process is killed?
+    # Wait, doesn't this just loop until the main process is killed?
 
 def should_be_light():
     # desc: return if the Theme should be light

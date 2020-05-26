@@ -40,7 +40,7 @@ def inplace_change(filename, old_string, new_string):
     with open(filename) as f:
         s = f.read()
         if old_string not in s:
-            print('"{old_string}" not found in {filename}.'.format(**locals()))
+            print(f'"{old_string}" not found in {filename}.'.format(**locals()))
             return
 
     with open(filename, 'w') as f:

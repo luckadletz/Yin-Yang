@@ -2,9 +2,10 @@
 
 # Form implementation generated from reading ui file 'ui/settings.ui'
 #
-# Created by: PyQt5 UI code generator 5.12.1
+# Created by: PyQt5 UI code generator 5.14.2
 #
 # WARNING! All changes made in this file will be lost!
+
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
@@ -13,22 +14,22 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.setEnabled(True)
-        MainWindow.resize(350, 450)
+        MainWindow.resize(350, 597)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
         MainWindow.setSizePolicy(sizePolicy)
         MainWindow.setMinimumSize(QtCore.QSize(350, 430))
-        MainWindow.setMaximumSize(QtCore.QSize(350, 450))
+        MainWindow.setMaximumSize(QtCore.QSize(350, 950))
         MainWindow.setBaseSize(QtCore.QSize(260, 300))
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("/opt/yin-yang/src/ui/assets/yin-yang.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("../../../../../../../../opt/yin-yang/src/ui/assets/yin-yang.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         MainWindow.setWindowIcon(icon)
         self.centralWidget = QtWidgets.QWidget(MainWindow)
         self.centralWidget.setObjectName("centralWidget")
         self.verticalLayoutWidget = QtWidgets.QWidget(self.centralWidget)
-        self.verticalLayoutWidget.setGeometry(QtCore.QRect(20, 40, 301, 391))
+        self.verticalLayoutWidget.setGeometry(QtCore.QRect(30, 10, 301, 540))
         self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
         self.verticalLayout.setContentsMargins(11, 11, 11, 11)
@@ -130,6 +131,27 @@ class Ui_MainWindow(object):
         self.horizontalLayout_9.addWidget(self.atom_line_dark)
         self.atom.addLayout(self.horizontalLayout_9)
         self.verticalLayout.addLayout(self.atom)
+        self.Kvantum = QtWidgets.QVBoxLayout()
+        self.Kvantum.setSpacing(6)
+        self.Kvantum.setObjectName("Kvantum")
+        self.label_11 = QtWidgets.QLabel(self.verticalLayoutWidget)
+        self.label_11.setObjectName("label_11")
+        self.Kvantum.addWidget(self.label_11)
+        self.horizontalLayout_11 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_11.setSpacing(6)
+        self.horizontalLayout_11.setObjectName("horizontalLayout_11")
+        self.kvantum_checkbox = QtWidgets.QCheckBox(self.verticalLayoutWidget)
+        self.kvantum_checkbox.setText("")
+        self.kvantum_checkbox.setObjectName("kvantum_checkbox")
+        self.horizontalLayout_11.addWidget(self.kvantum_checkbox)
+        self.kvantum_line_light = QtWidgets.QLineEdit(self.verticalLayoutWidget)
+        self.kvantum_line_light.setObjectName("kvantum_line_light")
+        self.horizontalLayout_11.addWidget(self.kvantum_line_light)
+        self.kvantum_line_dark = QtWidgets.QLineEdit(self.verticalLayoutWidget)
+        self.kvantum_line_dark.setObjectName("kvantum_line_dark")
+        self.horizontalLayout_11.addWidget(self.kvantum_line_dark)
+        self.Kvantum.addLayout(self.horizontalLayout_11)
+        self.verticalLayout.addLayout(self.Kvantum)
         self.Wallpaper = QtWidgets.QVBoxLayout()
         self.Wallpaper.setSpacing(6)
         self.Wallpaper.setObjectName("Wallpaper")
@@ -173,10 +195,9 @@ class Ui_MainWindow(object):
         self.gtk_line_dark.setText(_translate("MainWindow", "sdjhdjh"))
         self.label_6.setText(_translate("MainWindow", "VSCode"))
         self.label_9.setText(_translate("MainWindow", "Atom"))
+        self.label_11.setText(_translate("MainWindow", "Kvantum"))
         self.label_8.setText(_translate("MainWindow", "Wallpaper"))
         self.wallpaper_button_light.setText(_translate("MainWindow", "light"))
         self.wallpaper_button_dark.setText(_translate("MainWindow", "dark"))
         self.version_label.setText(_translate("MainWindow", "version: 0.1"))
         self.back_button.setText(_translate("MainWindow", "Back"))
-
-

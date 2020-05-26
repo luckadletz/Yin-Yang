@@ -51,6 +51,10 @@ class SettingsWindow(QtWidgets.QMainWindow):
         config.update("atomDarkTheme", self.ui.atom_line_dark.text())
         config.update("atomEnabled", self.ui.atom_checkbox.isChecked())
 
+        config.update("KvantumLightTheme", self.ui.kvantum_line_light.text())
+        config.update("KvantumDarkTheme", self.ui.kvantum_line_dark.text())
+        config.update("KvantumEnabled", self.ui.kvantum_checkbox.isChecked())
+
         # showing the main window and hiding the current one
         self.hide()
         self.window = MainWindow()
@@ -61,6 +65,7 @@ class SettingsWindow(QtWidgets.QMainWindow):
         self.ui.code_checkbox.toggled.connect(self.toggle_code_fields)
         self.ui.gtk_checkbox.toggled.connect(self.toggle_gtk_fields)
         self.ui.atom_checkbox.toggled.connect(self.toggle_atom_fields)
+        self.ui.kvantum_checkbox.toggled.connect(self.toggle_kvantum_fields)
         self.ui.wallpaper_button_light.clicked.connect(
             self.open_wallpaper_light)
         self.ui.wallpaper_button_dark.clicked.connect(self.open_wallpaper_dark)
@@ -111,6 +116,12 @@ class SettingsWindow(QtWidgets.QMainWindow):
         self.ui.atom_checkbox.setChecked(config.get("atomEnabled"))
         self.ui.atom_line_light.setEnabled(config.get("atomEnabled"))
         self.ui.atom_line_dark.setEnabled(config.get("atomEnabled"))
+        # ----- Kvantum --------
+        self.ui.kvantum_line_light.setText(config.get("KvantumLightTheme"))
+        self.ui.kvantum_line_dark.setText(config.get("KvantumDarkTheme"))
+        self.ui.kvantum_checkbox.setChecked(config.get("KvantumEnabled"))
+        self.ui.kvantum_line_light.setEnabled(config.get("KvantumEnabled"))
+        self.ui.kvantum_line_dark.setEnabled(config.get("KvantumEnabled"))
 
     def open_wallpaper_light(self):
         file_name, _ = QFileDialog.getOpenFileName(
@@ -244,6 +255,12 @@ class SettingsWindow(QtWidgets.QMainWindow):
         self.ui.atom_line_light.setEnabled(checked)
         self.ui.atom_line_dark.setEnabled(checked)
         config.update("atomEnabled", checked)
+
+    def toggle_kvantum_fields(self):
+        checked = self.ui.kvantum_checkbox.isChecked()
+        self.ui.kvantum_line_light.setEnabled(checked)
+        self.ui.kvantum_line_dark.setEnabled(checked)
+        config.update("kvantumEnabled", checked)
 
     def toggle_wallpaper_buttons(self):
         checked = self.ui.wallpaper_checkbox.isChecked()

@@ -69,6 +69,12 @@ def toggle_theme():
 
 class Daemon(threading.Thread):
     # TODO it's probably better to just add `yin-yang -L` and `yin-yang -D` to chron than run a python thread...
+    '''
+    # Appply light themes at 7:30 AM each day
+    30 7 * * * /usr/bin/yin-yang -L
+    # Appply dark themes at 4:20 PM each day
+    20 16 * * * /usr/bin/yin-yang -D
+    '''
     def __init__(self, thread_id):
         threading.Thread.__init__(self)
         self.thread_id = thread_id

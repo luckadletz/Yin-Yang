@@ -22,26 +22,18 @@ class Base(metaclass=ABCMeta):
     def is_enabled(cls, config) -> bool:
         return False
 
-    # TODO Some way of abstracting out Settings, UI elements...
+    @classmethod
+    @abstractmethod
+    def save_settings(cls, config):
+        pass
 
-from src.plugins import kde, gtkkde, wallpaper, vscode, atom, gtk, firefox, gnome, kvantum
+    @classmethod
+    @abstractmethod
+    def load_settings(cls, config):
+        pass
 
-class AllPlugins():
-    def __init__(self):
-        self.plugins = [
-            kde.Plugin(),
-            gtkkde.Plugin(),
-            wallpaper.Plugin(),
-            vscode.Plugin(),
-            atom.Plugin(),
-            gtk.Plugin(),
-            firefox.Plugin(),
-            gnome.Plugin(),
-            kvantum.Plugin()
-        ]
+    # TODO Some way of abstracting out UI elements...
 
-    def __iter__(self):
-        return self.plugins.__iter__()
 
 '''     UTILS       '''
 
@@ -68,3 +60,5 @@ def replace(file_path, pattern, subst):
     #Move new file
     move(abs_path, file_path)
     print(f"Updated {file_path}")
+
+from src.plugins.allplugins import AllPlugins as All

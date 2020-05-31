@@ -113,6 +113,10 @@ if exists():
 config["desktop"] = get_desktop()
 
 
+# TODO
+def make_default_config() -> {}:
+    pass
+
 def get_config():
     """returns the config"""
     return config
@@ -132,22 +136,6 @@ def write_config(config=config):
 
 def gtk_exists():
     return os.path.isfile(path+"/gtk-3.0/settings.ini")
-
-
-def get_enabled_plugins():
-    """returns a list of plugins which are activated"""
-    pass
-
-
-def get_light_time():
-    """returns the time which should toggle the lightMode"""
-    pass
-
-
-def get_dark_time():
-    """returns the time which should toggle the lightMode"""
-    pass
-
 
 def get_theme():
     return config["theme"]

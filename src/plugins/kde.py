@@ -9,13 +9,13 @@ class Plugin(plugin.Base):
     
     @classmethod
     def apply_light(cls, config):
-        super.apply_light(config)
+        super(Plugin, cls).apply_light(config)
         kde_theme = config.get("kdeLightTheme")
         subprocess.run(["lookandfeeltool", "-a", kde_theme])
 
     @classmethod
     def apply_dark(cls, config):
-        super.apply_dark(config)
+        super(Plugin, cls).apply_dark(config)
         kde_theme = config.get("kdeDarkTheme")
         subprocess.run(["lookandfeeltool", "-a", kde_theme])
 

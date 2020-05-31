@@ -41,12 +41,12 @@ class YinYang():
             self.apply_all_dark()
 
     def apply_all_dark(self):
-        for p in plugin.AllPlugins():
+        for p in plugin.All():
             if(p.is_enabled(self.config)):
                 p.apply_dark(self.config)
 
     def apply_all_light(self):
-        for p in plugin.AllPlugins():
+        for p in plugin.All():
             if(p.is_enabled(self.config)):
                 p.apply_light(self.config)
 

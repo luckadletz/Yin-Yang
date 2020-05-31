@@ -1,4 +1,5 @@
-from src.plugins import kde, gtkkde, wallpaper, vscode, atom, gtk, firefox, gnome
+
+from src.plugins import kde, gtkkde, wallpaper, vscode, atom, gtk, firefox, gnome, kvantum
 
 class AllPlugins():
     def __init__(self):
@@ -10,7 +11,8 @@ class AllPlugins():
             atom.Plugin(),
             gtk.Plugin(),
             firefox.Plugin(),
-            gnome.Plugin()
+            gnome.Plugin(),
+            kvantum.Plugin()
         ]
 
     def __iter__(self):

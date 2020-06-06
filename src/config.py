@@ -93,8 +93,8 @@ def get_default_config():
     for p in plugin.All():
         try:
             p.set_default_settings(config)
-        except:
-            print(f"error in {p.name()}->set_default_settings!")
+        except Exception as ex:
+            print(f"error in {p.name()}->set_default_settings!\n{str(ex)}")
 
 def get_config():
     """returns the config"""

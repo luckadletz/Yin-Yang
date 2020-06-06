@@ -34,8 +34,8 @@ class SettingsWindow(QtWidgets.QMainWindow):
         for p in plugin.All():
             try:
                 p.update_config(self.ui, config)
-            except:
-                print(f"error in {p.name()}->update_config!")
+            except Exception as ex:
+                print(f"error in {p.name()}->update_config!\n{str(ex)}")
 
         config.update("KvantumLightTheme", self.ui.kvantum_line_light.text())
         config.update("KvantumDarkTheme", self.ui.kvantum_line_dark.text())
@@ -59,8 +59,8 @@ class SettingsWindow(QtWidgets.QMainWindow):
         for p in plugin.All():
             try:
                 p.update_ui(self.ui, config)
-            except:
-                print(f"error in {p.name()}->update_ui!")
+            except Exception as ex:
+                print(f"error in {p.name()}->update_ui!\n{str(ex)}")
             
     def center(self):
         frame_gm = self.frameGeometry()

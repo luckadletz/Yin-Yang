@@ -5,13 +5,13 @@ class AllPlugins():
     def __init__(self):
         self.plugins = [
             kde.Plugin(),
-            gtkkde.Plugin(),
-            wallpaper.Plugin(),
+            # gtkkde.Plugin(),
+            # wallpaper.Plugin(),
             vscode.Plugin(),
-            atom.Plugin(),
-            gtk.Plugin(),
-            firefox.Plugin(),
-            gnome.Plugin(),
+            # atom.Plugin(),
+            # gtk.Plugin(),
+            # firefox.Plugin(),
+            # gnome.Plugin(),
             kvantum.Plugin()
         ]
 

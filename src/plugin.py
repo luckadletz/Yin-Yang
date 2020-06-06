@@ -24,15 +24,18 @@ class Base(metaclass=ABCMeta):
 
     @classmethod
     @abstractmethod
-    def save_settings(cls, config):
+    def init_config(cls, config):
+        pass
+        
+    @classmethod
+    @abstractmethod
+    def update_ui(cls, ui, config):
         pass
 
     @classmethod
     @abstractmethod
-    def load_settings(cls, config):
-        pass
-
-    # TODO Some way of abstracting out UI elements...
+    def update_config(cls, ui, config):
+        pass    
 
 
 '''     UTILS       '''

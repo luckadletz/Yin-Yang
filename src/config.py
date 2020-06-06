@@ -5,6 +5,8 @@ import pathlib
 import re
 from suntime import Sun, SunTimeException
 
+from src import plugin
+
 # aliases for path to use later on
 user = pwd.getpwuid(os.getuid())[0]
 path = "/home/"+user+"/.config"
@@ -77,32 +79,7 @@ config["longitude"] = ""
 config["schedule"] = False
 config["switchToDark"] = "20:00"
 config["switchToLight"] = "07:00"
-config["theme"] = ""
-config["codeLightTheme"] = "Default Light+"
-config["codeDarkTheme"] = "Default Dark+"
-config["codeEnabled"] = False
-config["kdeLightTheme"] = "org.kde.breeze.desktop"
-config["kdeDarkTheme"] = "org.kde.breezedark.desktop"
-config["kdeEnabled"] = False
-config["gtkLightTheme"] = ""
-config["gtkDarkTheme"] = ""
-config["atomLightTheme"] = ""
-config["atomDarkTheme"] = ""
-config["atomEnabled"] = False
-config["KvantumLightTheme"] = ""
-config["KvantumDarkTheme"] = ""
-config["KvantumEnabled"] = False
-config["gtkEnabled"] = False
-config["wallpaperLightTheme"] = ""
-config["wallpaperDarkTheme"] = ""
-config["wallpaperEnabled"] = False
-config["firefoxEnabled"] = False
-config["firefoxDarkTheme"] = "firefox-compact-dark@mozilla.org"
-config["firefoxLightTheme"] = "firefox-compact-light@mozilla.org"
-config["firefoxActiveTheme"] = "firefox-compact-light@mozilla.org"
-config["gnomeEnabled"] = False
-config["gnomeLightTheme"] = ""
-config["gnomeDarkTheme"] = ""
+
 
 
 if exists():
@@ -112,10 +89,12 @@ if exists():
 
 config["desktop"] = get_desktop()
 
-
-# TODO
-def make_default_config() -> {}:
-    pass
+def get_default_config():
+    for p in plugin.All():
+        try:
+            p.set_default_settings(config)
+        except:
+            print(f"error in {p.name()}->set_default_settings!")
 
 def get_config():
     """returns the config"""
@@ -127,119 +106,17 @@ def update(key, value):
     config[key] = value
     write_config()
 
-
 def write_config(config=config):
     """Write configuration"""
     with open(path+"/yin_yang/yin_yang.json", 'w') as conf:
         json.dump(config, conf, indent=4)
 
-
 def gtk_exists():
     return os.path.isfile(path+"/gtk-3.0/settings.ini")
 
-def get_theme():
-    return config["theme"]
-
-
-def get_kde_light_theme():
-    return config["kdeLightTheme"]
-
-
-def get_kde_dark_theme():
-    return config["kdeDarkTheme"]
-
-
-def get_kde_enabled():
-    return config["kdeEnabled"]
-
-
-def get_code_light_theme():
-    return config["codeLightTheme"]
-
-
-def get_code_dark_theme():
-    return config["codeDarkTheme"]
-
-
-def get_code_enabled():
-    return config["codeEnabled"]
-
-
-def get_gtk_light_theme():
-    return config["gtkLightTheme"]
-
-
-def get_gtk_dark_theme():
-    return config["gtkDarkTheme"]
-
-
-def get_gtk_enabled():
-    return config["gtkEnabled"]
-
-
 def get(key):
-    """Return the given key from the config"""
-    return config[key]
-
-def is_scheduled():
-    return config["schedule"]
-
-
-def get_version():
-    return config["version"]
-
-
-def kde_get_light_theme():
-    """Return the KDE light theme specified in the yin-yang config"""
-    return config["kdeLightTheme"]
-
-
-def kde_get_dark_theme():
-    """Return the KDE dark theme specified in the yin-yang config"""
-    return config["kdeDarkTheme"]
-
-
-def kde_get_checkbox():
-    return config["kdeEnabled"]
-
-
-def gtk_get_light_theme():
-    """Return the  GTK Light theme specified in the yin-yang config"""
-    return config["gtkLightTheme"]
-
-
-def gtk_get_dark_theme():
-    """Return the  GTK dark theme specified in the yin-yang config"""
-    return config["gtkDarkTheme"]
-
-
-def gtk_get_checkbox():
-    return config["gtkEnabled"]
-
-
-def code_get_light_theme():
-    """Return the code light theme specified in the yin-yang config"""
-    return config["codeLightTheme"]
-
-
-def code_get_dark_theme():
-    """Return the  code dark theme specified in the yin-yang config"""
-    return config["codeDarkTheme"]
-
-
-def code_get_checkbox():
-    return config["codeEnabled"]
-
-
-def gnome_get_light_theme():
-    """Return the  Gnome Shell Light theme specified in the yin-yang config"""
-    return config["gnomeLightTheme"]
-
-
-def gnome_get_dark_theme():
-    """Return the  Gnome Shell dark theme specified in the yin-yang config"""
-    return config["gnomeDarkTheme"]
-
-
-def gnome_get_checkbox():
-    return config["gnomeEnabled"]
+    try:
+        return config[key]
+    except:
+        print(f"Key: {key} not found in config!")
+        return None

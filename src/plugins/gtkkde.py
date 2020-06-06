@@ -23,6 +23,22 @@ class Plugin(plugin.Base):
     def is_enabled(cls, config) -> bool:
         return config.get("gtkEnabled")
 
+    @classmethod
+    def init_config(cls, config):
+        # TODO
+        pass
+
+    @classmethod
+    def update_ui(cls, ui, config):
+        # TODO
+        pass
+
+    @classmethod
+    def update_config(cls, ui, config):
+        # TODO
+        pass    
+
+
 
 # aliases for path to use later on
 user = pwd.getpwuid(os.getuid())[0]

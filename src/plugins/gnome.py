@@ -24,3 +24,9 @@ class Plugin(plugin.Base):
     @classmethod
     def is_enabled(cls, config) -> bool:
         return config.get("gnomeEnabled")
+
+    @classmethod
+    def init_config(cls, config):
+        config["gnomeEnabled"] = False
+        config["gnomeLightTheme"] = ""
+        config["gnomeDarkTheme"] = ""

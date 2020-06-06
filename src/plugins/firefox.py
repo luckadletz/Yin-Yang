@@ -28,6 +28,24 @@ class Plugin(plugin.Base):
     def is_enabled(cls, config) -> bool:
         return False
 
+    @classmethod
+    def init_config(cls, config):
+        config["firefoxEnabled"] = False
+        config["firefoxDarkTheme"] = "firefox-compact-dark@mozilla.org"
+        config["firefoxLightTheme"] = "firefox-compact-light@mozilla.org"
+        config["firefoxActiveTheme"] = "firefox-compact-light@mozilla.org"
+        
+    @classmethod
+    def update_ui(cls, ui, config):
+        # TODO
+        pass
+
+    @classmethod
+    def update_config(cls, ui, config):
+        # TODO
+        pass    
+
+
 # TODO Move into class
 
 # aliases for path to use later on

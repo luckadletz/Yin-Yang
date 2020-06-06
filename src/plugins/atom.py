@@ -24,6 +24,25 @@ class Plugin(plugin.Base):
     def is_enabled(cls, config) -> bool:
         return config.get("atomEnabled")
 
+    @classmethod
+    def update_config(cls, ui, config):
+        config.update("atomLightTheme", self.ui.atom_line_light.text())
+        config.update("atomDarkTheme", self.ui.atom_line_dark.text())
+        config.update("atomEnabled", self.ui.atom_checkbox.isChecked())
+
+    @classmethod
+    def init_config(cls, config):
+        config["atomEnabled"] = False
+        config["atomLightTheme"] = ""
+        config["atomDarkTheme"] = ""
+
+
+    def toggle_atom_fields(self):
+        checked = self.ui.atom_checkbox.isChecked()
+        self.ui.atom_line_light.setEnabled(checked)
+        self.ui.atom_line_dark.setEnabled(checked)
+        config.update("atomEnabled", checked)
+
 
 # aliases for path to use later on
 user = pwd.getpwuid(os.getuid())[0]

@@ -21,6 +21,26 @@ class Plugin(plugin.Base):
     def is_enabled(cls, config) -> bool:
         return config.get("atomEnabled")
 
+    @classmethod
+    def init_config(cls, config):
+        config["gtkLightTheme"] = ""
+        config["gtkDarkTheme"] = ""
+        config["gtkEnabled"] = False
+
+    @classmethod
+    def update_ui(cls, ui, config):
+        self.ui.gtk_line_light.setText(config.get("gtkLightTheme"))
+        self.ui.gtk_line_dark.setText(config.get("gtkDarkTheme"))
+        self.ui.gtk_checkbox.setChecked(config.get("gtkEnabled"))
+        self.ui.gtk_line_light.setEnabled(config.get("gtkEnabled"))
+        self.ui.gtk_line_dark.setEnabled(config.get("gtkEnabled"))
+
+    @classmethod
+    def update_config(cls, ui, config):
+        config.update("gtkLightTheme", self.ui.gtk_line_light.text())
+        config.update("gtkDarkTheme", self.ui.gtk_line_dark.text())
+        config.update("gtkEnabled", self.ui.gtk_checkbox.isChecked())
+
 def switch_to_light():
     gtk_theme = config.get("gtkLightTheme")
     # gtk_theme = "Default"

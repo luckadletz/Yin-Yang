@@ -28,6 +28,24 @@ class Plugin(plugin.Base):
     def is_enabled(cls, config) -> bool:
         return config.get("codeEnabled")
 
+    @classmethod
+    def init_config(cls, config):
+        config["codeLightTheme"] = "Default Light+"
+        config["codeDarkTheme"] = "Default Dark+"
+        config["codeEnabled"] = False
+
+    @classmethod
+    def update_ui(cls, ui, config):
+        self.ui.code_line_light.setText(config.get("codeLightTheme"))
+        self.ui.code_line_light.setEnabled(config.get("codeEnabled"))
+        self.ui.code_line_dark.setText(config.get("codeDarkTheme"))
+        self.ui.code_line_dark.setEnabled(config.get("codeEnabled"))
+        self.ui.code_checkbox.setChecked(config.get("codeEnabled"))
+
+    @classmethod
+    def update_config(cls, ui, config):
+        checked = self.ui.code_checkbox.isChecked()
+        config.update("codeEnabled", checked)
 
 #TODO refactor into plugin class
 

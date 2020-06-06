@@ -43,12 +43,18 @@ class YinYang():
     def apply_all_dark(self):
         for p in plugin.All():
             if(p.is_enabled(self.config)):
-                p.apply_dark(self.config)
+                try:
+                    p.apply_dark(self.config)
+                except:
+                    print(f"error in {p.name()}->apply_dark!")
 
     def apply_all_light(self):
         for p in plugin.All():
             if(p.is_enabled(self.config)):
-                p.apply_light(self.config)
+                try:
+                    p.apply_light(self.config)
+                except:
+                    print(f"error in {p.name()}->apply_light!")
 
 def switch_to_light():
     yin = YinYang(config, True)

@@ -1,3 +1,5 @@
+import os
+import pwd
 import subprocess
 from src import config
 from src import plugin
@@ -36,25 +38,24 @@ class Plugin(plugin.Base):
     def update_ui(cls, ui, config):
         cls.get_kde_themes(ui)
 
-        self.ui.kde_checkbox.setChecked(config.get("kdeEnabled"))
-        self.ui.kde_combo_dark.setEnabled(config.get("kdeEnabled"))
-        self.ui.kde_combo_light.setEnabled(config.get("kdeEnabled"))
-        index_light = self.ui.kde_combo_light.findText(
-            self.get_kde_theme_short(config.get("kdeLightTheme")))
-        self.ui.kde_combo_light.setCurrentIndex(index_light)
-        index_dark = self.ui.kde_combo_dark.findText(
-            self.get_kde_theme_short(config.get("kdeDarkTheme")))
-        self.ui.kde_combo_dark.setCurrentIndex(index_dark)
+        ui.kde_checkbox.setChecked(config.get("kdeEnabled"))
+        ui.kde_combo_dark.setEnabled(config.get("kdeEnabled"))
+        ui.kde_combo_light.setEnabled(config.get("kdeEnabled"))
+        index_light = ui.kde_combo_light.findText(
+            cls.get_kde_theme_short(config.get("kdeLightTheme")))
+        ui.kde_combo_light.setCurrentIndex(index_light)
+        index_dark = ui.kde_combo_dark.findText(
+            cls.get_kde_theme_short(config.get("kdeDarkTheme")))
+        ui.kde_combo_dark.setCurrentIndex(index_dark)
 
     @classmethod
     def update_config(cls, ui, config):
-        kde_light_short = self.ui.kde_combo_light.currentText()
-        kde_dark_short = self.ui.kde_combo_dark.currentText()
+        kde_light_short = ui.kde_combo_light.currentText()
+        kde_dark_short = ui.kde_combo_dark.currentText()
 
-        config.update("kdeLightTheme",
-                      self.get_kde_theme_long(kde_light_short))
-        config.update("kdeDarkTheme", self.get_kde_theme_long(kde_dark_short))
-        config.update("kdeEnabled", self.ui.kde_checkbox.isChecked())
+        config.update("kdeLightTheme", cls.get_kde_theme_long(kde_light_short))
+        config.update("kdeDarkTheme", cls.get_kde_theme_long(kde_dark_short))
+        config.update("kdeEnabled", ui.kde_checkbox.isChecked())
 
     @classmethod
     def get_kde_themes(cls, ui):

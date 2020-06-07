@@ -92,9 +92,9 @@ config["desktop"] = get_desktop()
 def get_default_config():
     for p in plugin.All():
         try:
-            p.set_default_settings(config)
+            p.init_config(config)
         except Exception as ex:
-            print(f"error in {p.name()}->set_default_settings!\n{str(ex)}")
+            print(f"error in {p.name()}->init_config!\n{str(ex)}")
 
 def get_config():
     """returns the config"""

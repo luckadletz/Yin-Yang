@@ -36,16 +36,17 @@ class Plugin(plugin.Base):
 
     @classmethod
     def update_ui(cls, ui, config):
-        self.ui.code_line_light.setText(config.get("codeLightTheme"))
-        self.ui.code_line_light.setEnabled(config.get("codeEnabled"))
-        self.ui.code_line_dark.setText(config.get("codeDarkTheme"))
-        self.ui.code_line_dark.setEnabled(config.get("codeEnabled"))
-        self.ui.code_checkbox.setChecked(config.get("codeEnabled"))
+        ui.code_line_light.setText(config.get("codeLightTheme"))
+        ui.code_line_dark.setText(config.get("codeDarkTheme"))
+        ui.code_checkbox.setChecked(config.get("codeEnabled"))
 
     @classmethod
     def update_config(cls, ui, config):
-        checked = self.ui.code_checkbox.isChecked()
+        checked = ui.code_checkbox.isChecked()
         config.update("codeEnabled", checked)
+        config.update("codeLightTheme", ui.code_line_light.text())
+        config.update("codeDarkTheme", ui.code_line_dark.text())
+
 
 #TODO refactor into plugin class
 

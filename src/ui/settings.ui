@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>350</width>
-    <height>597</height>
+    <width>400</width>
+    <height>750</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -21,14 +21,14 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>350</width>
-    <height>430</height>
+    <width>400</width>
+    <height>750</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>350</width>
-    <height>950</height>
+    <width>400</width>
+    <height>750</height>
    </size>
   </property>
   <property name="baseSize">
@@ -50,8 +50,8 @@
      <rect>
       <x>30</x>
       <y>10</y>
-      <width>301</width>
-      <height>540</height>
+      <width>341</width>
+      <height>690</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -66,6 +66,38 @@
        </property>
        <property name="text">
         <string>Settings</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="back_button">
+       <property name="text">
+        <string>Back</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <widget class="QPushButton" name="cancel_button">
+         <property name="text">
+          <string>Cancel</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="apply_button">
+         <property name="text">
+          <string> Apply</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QPushButton" name="default_button">
+       <property name="text">
+        <string>Defaults</string>
        </property>
       </widget>
      </item>
@@ -125,7 +157,7 @@
          <item>
           <widget class="QLineEdit" name="gtk_line_dark">
            <property name="text">
-            <string>sdjhdjh</string>
+            <string/>
            </property>
           </widget>
          </item>
@@ -211,7 +243,11 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="kvantum_line_light"/>
+          <widget class="QLineEdit" name="kvantum_line_light">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
          </item>
          <item>
           <widget class="QLineEdit" name="kvantum_line_dark"/>
@@ -267,19 +303,6 @@
       </layout>
      </item>
     </layout>
-   </widget>
-   <widget class="QPushButton" name="back_button">
-    <property name="geometry">
-     <rect>
-      <x>230</x>
-      <y>10</y>
-      <width>94</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Back</string>
-    </property>
    </widget>
   </widget>
  </widget>

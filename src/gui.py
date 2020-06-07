@@ -24,33 +24,40 @@ class SettingsWindow(QtWidgets.QMainWindow):
         # register all the handler onClick functions ...
         self.register_handlers()
 
+    def register_handlers(self):
+        self.ui.back_button.clicked.connect(self.save_and_exit)
+        self.ui.apply_button.clicked.connect(self.save)
+        self.ui.cancel_button.clicked.connect(self.cancel)
+        
+        # TODO Disabled defaults - currently saves instantly, overwriting settings on disk
+        self.ui.default_button.setEnabled(False)
+        # self.ui.default_button.clicked.connect(self.get_defaults)
+
+    # On window close
     def close_event(self, event):
-        """Overwrite the function that gets called when window is closed"""
         self.save_and_exit()
 
-    def save_and_exit(self):
-        print("saving options")
+    def cancel(self):
+        # showing the main window and hiding the current one
+        self.hide()
+        self.window = MainWindow()
+        self.window.show()
 
+    def save(self):
+        print("saving options")
         for p in plugin.All():
             try:
                 p.update_config(self.ui, config)
             except Exception as ex:
                 print(f"error in {p.name()}->update_config!\n{str(ex)}")
 
-        config.update("KvantumLightTheme", self.ui.kvantum_line_light.text())
-        config.update("KvantumDarkTheme", self.ui.kvantum_line_dark.text())
-        config.update("KvantumEnabled", self.ui.kvantum_checkbox.isChecked())
+    def save_and_exit(self):
+        self.save()        
+        self.cancel()
 
-        # showing the main window and hiding the current one
-        self.hide()
-        self.window = MainWindow()
-        self.window.show()
-
-    def register_handlers(self):
-        self.ui.back_button.clicked.connect(self.save_and_exit)
-
-        # TODO Add apply button
-
+    def get_defaults(self):
+        config.get_default_config()
+        self.sync_with_config()
 
     def sync_with_config(self):
         # sync config label with get the correct version

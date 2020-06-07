@@ -26,26 +26,24 @@ class Plugin(plugin.Base):
 
     @classmethod
     def is_enabled(cls, config) -> bool:
-        return config.get("kdeEnabled")
+        return config.get("KdeEnabled")
 
     @classmethod
     def init_config(cls, config):
-        config["kdeLightTheme"] = "org.kde.breeze.desktop"
-        config["kdeDarkTheme"] = "org.kde.breezedark.desktop"
-        config["kdeEnabled"] = False
+        config["KdeLightTheme"] = "org.kde.breeze.desktop"
+        config["KdeDarkTheme"] = "org.kde.breezedark.desktop"
+        config["KdeEnabled"] = False
 
     @classmethod
     def update_ui(cls, ui, config):
         cls.get_kde_themes(ui)
 
-        ui.kde_checkbox.setChecked(config.get("kdeEnabled"))
-        ui.kde_combo_dark.setEnabled(config.get("kdeEnabled"))
-        ui.kde_combo_light.setEnabled(config.get("kdeEnabled"))
+        ui.kde_checkbox.setChecked(config.get("KdeEnabled"))
         index_light = ui.kde_combo_light.findText(
-            cls.get_kde_theme_short(config.get("kdeLightTheme")))
+            cls.get_kde_theme_short(config.get("KdeLightTheme")))
         ui.kde_combo_light.setCurrentIndex(index_light)
         index_dark = ui.kde_combo_dark.findText(
-            cls.get_kde_theme_short(config.get("kdeDarkTheme")))
+            cls.get_kde_themle_short(config.get("KdeDarkTheme")))
         ui.kde_combo_dark.setCurrentIndex(index_dark)
 
     @classmethod
@@ -53,9 +51,9 @@ class Plugin(plugin.Base):
         kde_light_short = ui.kde_combo_light.currentText()
         kde_dark_short = ui.kde_combo_dark.currentText()
 
-        config.update("kdeLightTheme", cls.get_kde_theme_long(kde_light_short))
-        config.update("kdeDarkTheme", cls.get_kde_theme_long(kde_dark_short))
-        config.update("kdeEnabled", ui.kde_checkbox.isChecked())
+        config.update("KdeLightTheme", cls.get_kde_theme_long(kde_light_short))
+        config.update("KdeDarkTheme", cls.get_kde_theme_long(kde_dark_short))
+        config.update("KdeEnabled", ui.kde_checkbox.isChecked())
 
     @classmethod
     def get_kde_themes(cls, ui):
@@ -73,7 +71,6 @@ class Plugin(plugin.Base):
             ui.kde_combo_light.setEnabled(False)
             ui.kde_combo_dark.setEnabled(False)
             ui.kde_checkbox.setChecked(False)
-            config.update("codeEnabled", False)
 
     @classmethod
     def get_kde_theme_names(cls):
@@ -137,7 +134,8 @@ class Plugin(plugin.Base):
 
         return themes
 
-    def get_kde_theme_long(self, short: str):
+    @classmethod
+    def get_kde_theme_long(cls, short: str):
         """
         Translates short names to long names.
         :param short: short name
@@ -145,10 +143,11 @@ class Plugin(plugin.Base):
         """
         if short == '' or short is None:
             return
-        themes = self.get_kde_theme_names()
+        themes = cls.get_kde_theme_names()
         return themes[short]
 
-    def get_kde_theme_short(self, long: str):
+    @classmethod
+    def get_kde_theme_short(cls, long: str):
         """
         Translates long names to short names.
         :param long: long name
@@ -156,7 +155,7 @@ class Plugin(plugin.Base):
         """
         if long == '' or long is None:
             return
-        themes = self.get_kde_theme_names()
+        themes = cls.get_kde_theme_names()
         short_names = list(themes.keys())
         long_names = list(themes.values())
         return short_names[long_names.index(long)]
